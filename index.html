@@ -529,8 +529,8 @@
         <p class="data-p"><strong>Data Security:</strong> We implement industry-standard security measures including encryption, secure access controls, regular security audits, and employee training programs.</p>
         <p class="data-p"><strong>Third-Party Processors:</strong> Any third-party service providers we work with are carefully vetted and must meet our strict data protection standards.</p>
         <p class="data-p"><strong>Data Breach Response:</strong> We have comprehensive incident response procedures in place and will notify you promptly in the unlikely event of a data breach affecting your information.</p>
-        <div class="data-foot">For more information about how we handle your personal data, please review our <a href="https://policyfiles.clevertel.co.za/privacy-policy.html" class="em-lnk">
-  Privacy Policy, <a href="https://policyfiles.clevertel.co.za/popia-summary.html" class="em-lnk"> POPIA Summary
+        <div class="data-foot">For more information about how we handle your personal data, please review our <a href="https://www.clevertel.co.za/privacy-policy.html" class="em-lnk">
+  Privacy Policy, <a href="https://www.clevertel.co.za/popia-summary.html" class="em-lnk"> POPIA Summary
 </a> or contact our Data Protection Officer at <a href="mailto:privacy@clevertel.co.za" class="em-lnk">privacy@clevertel.co.za</a></div>
       </div>
     </div>
@@ -574,6 +574,16 @@
         <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
           <div class="fg"><label class="fl" for="fn">Your Name *</label><input type="text" id="fn" name="name" required placeholder="John Doe" /></div>
           <div class="fg"><label class="fl" for="fe">Email Address *</label><input type="email" id="fe" name="email" required placeholder="john@example.com" /></div>
+          <div class="fg">
+  <label class="fl" for="fs">Subject *</label>
+  <select id="fs" name="subject" required>
+    <option value="">Select a service</option>
+    <option value="Managed IT Services">Managed IT Services</option>
+    <option value="Business Automation">Business Automation</option>
+    <option value="Messaging & Engagement">Messaging & Engagement</option>
+    <option value="Email Security & Protection">Email Security & Protection</option>
+  </select>
+</div>
           <div class="fg"><label class="fl" for="fm">Message *</label><textarea id="fm" name="message" required rows="5" placeholder="Tell us about your IT and messaging needs..."></textarea></div>
           <div class="fg cbx-row">
             <input type="checkbox" id="popia" name="popia" />
@@ -637,18 +647,18 @@
       <div class="ft-bot-inner">
         <p class="ft-copy" id="ft-copy">© 2025 Clevertel SA Group. All rights reserved.</p>
         <div class="ft-legal">
-          <button class="ft-leg-btn"onclick="goTo('compliance')">>Privacy Policy</button>
+          <button class="ft-leg-btn"onclick="goTo('compliance')">Privacy Policy</button>
          <button class="ft-leg-btn"
-        onclick="window.location.href='https://policyfiles.clevertel.co.za/terms-and-conditions.html'">
+        onclick="window.location.href='https://www.clevertel.co.za/terms-and-conditions.html'">
   Terms of Service
 </button>
           <button class="ft-leg-btn" onclick="goTo('compliance')">POPIA Compliance</button>
              <button class="ft-leg-btn"
-        onclick="window.location.href='https://policyfiles.clevertel.co.za//refund-policy.html'">
+        onclick="window.location.href='https://www.clevertel.co.za/refund-policy.html'">
   Reund policy
 </button>
              <button class="ft-leg-btn"
-        onclick="window.location.href='https://policyfiles.clevertel.co.za/payment-term.html'">
+        onclick="window.location.href='https://www.clevertel.co.za/payment-term.html'">
   Payment terms
 </button>
         </div>
@@ -706,16 +716,39 @@
   }
 
   /* Contact form → mailto (mirrors ContactSection.jsx exactly) */
-  function handleSubmit(e){
-    e.preventDefault();
-    const name=document.getElementById('fn').value.trim();
-    const email=document.getElementById('fe').value.trim();
-    const msg=document.getElementById('fm').value.trim();
-    const consent=document.getElementById('popia').checked;
-    if(!consent){alert('Please accept the POPIA consent to continue.');return;}
-    const sub=encodeURIComponent('Contact Form Submission from '+name);
-    const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+msg+'\n\n---\nPOPIA Consent: Granted');
-    window.location.href='mailto:info@clevertel.co.za?subject='+sub+'&body='+body;
+function handleSubmit(e){
+  e.preventDefault();
+
+  const name = document.getElementById('fn').value.trim();
+  const email = document.getElementById('fe').value.trim();
+  const service = document.getElementById('fs').value; // NEW
+  const msg = document.getElementById('fm').value.trim();
+  const consent = document.getElementById('popia').checked;
+
+  if(!service){
+    alert('Please select a subject.');
+    return;
+  }
+
+  if(!consent){
+    alert('Please accept the POPIA consent to continue.');
+    return;
+  }
+
+  const sub = encodeURIComponent(service + ' - Contact Form Submission from ' + name);
+
+  const body = encodeURIComponent(
+    'Service: ' + service +
+    '\nName: ' + name +
+    '\nEmail: ' + email +
+    '\n\nMessage:\n' + msg +
+    '\n\n---\nPOPIA Consent: Granted'
+  );
+
+  window.location.href =
+    'mailto:info@clevertel.co.za?subject=' + sub + '&body=' + body;
+}
+
   }
 </script>
 </body>
