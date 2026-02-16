@@ -574,16 +574,6 @@
         <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
           <div class="fg"><label class="fl" for="fn">Your Name *</label><input type="text" id="fn" name="name" required placeholder="John Doe" /></div>
           <div class="fg"><label class="fl" for="fe">Email Address *</label><input type="email" id="fe" name="email" required placeholder="john@example.com" /></div>
-          <div class="fg">
-  <label class="fl" for="fs">Subject *</label>
-  <select id="fs" name="subject" required>
-    <option value="">Select a service</option>
-    <option value="Managed IT Services">Managed IT Services</option>
-    <option value="Business Automation">Business Automation</option>
-    <option value="Messaging & Engagement">Messaging & Engagement</option>
-    <option value="Email Security & Protection">Email Security & Protection</option>
-  </select>
-</div>
           <div class="fg"><label class="fl" for="fm">Message *</label><textarea id="fm" name="message" required rows="5" placeholder="Tell us about your IT and messaging needs..."></textarea></div>
           <div class="fg cbx-row">
             <input type="checkbox" id="popia" name="popia" />
@@ -714,41 +704,17 @@
       document.getElementById('panel-'+id).classList.toggle('active',id===t);
     });
   }
-
-  /* Contact form → mailto (mirrors ContactSection.jsx exactly) */
-function handleSubmit(e){
-  e.preventDefault();
-
-  const name = document.getElementById('fn').value.trim();
-  const email = document.getElementById('fe').value.trim();
-  const service = document.getElementById('fs').value; // NEW
-  const msg = document.getElementById('fm').value.trim();
-  const consent = document.getElementById('popia').checked;
-
-  if(!service){
-    alert('Please select a subject.');
-    return;
-  }
-
-  if(!consent){
-    alert('Please accept the POPIA consent to continue.');
-    return;
-  }
-
-  const sub = encodeURIComponent(service + ' - Contact Form Submission from ' + name);
-
-  const body = encodeURIComponent(
-    'Service: ' + service +
-    '\nName: ' + name +
-    '\nEmail: ' + email +
-    '\n\nMessage:\n' + msg +
-    '\n\n---\nPOPIA Consent: Granted'
-  );
-
-  window.location.href =
-    'mailto:info@clevertel.co.za?subject=' + sub + '&body=' + body;
-}
-
+    /* Contact form → mailto (mirrors ContactSection.jsx exactly) */
+  function handleSubmit(e){
+    e.preventDefault();
+    const name=document.getElementById('fn').value.trim();
+    const email=document.getElementById('fe').value.trim();
+    const msg=document.getElementById('fm').value.trim();
+    const consent=document.getElementById('popia').checked;
+    if(!consent){alert('Please accept the POPIA consent to continue.');return;}
+    const sub=encodeURIComponent('Contact Form Submission from '+name);
+    const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+msg+'\n\n---\nPOPIA Consent: Granted');
+    window.location.href='mailto:info@clevertel.co.za?subject='+sub+'&body='+body;
   }
 </script>
 </body>
