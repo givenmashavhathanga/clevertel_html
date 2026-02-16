@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clevertel SA Group — Managed IT, Business Automation &amp; Messaging Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    /* BASE */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;background:#fff;color:#1c1917;transition:background-color .3s,color .3s}
+    html.dark body{background:#111827;color:#fdfcfb}
+
+    /* CSS VARS */
+    :root{
+      --em-50:#ecfdf5;--em-100:#d1fae5;--em-200:#a7f3d0;--em-400:#34d399;
+      --em-500:#10b981;--em-600:#059669;--em-700:#047857;--em-800:#065f46;--em-900:#064e3b;
+      --cream-50:#fdfcfb;--cream-100:#faf8f5;--cream-200:#f5f2ed;
+      --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;
+      --gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;
+      --gray-800:#1f2937;--gray-900:#111827;--gray-950:#030712;
+      --radius:0.75rem
+    }
+
+    /* ANIMATIONS — mirrors App.css */
+    @keyframes fade-in{from{opacity:0}to{opacity:1}}
+    @keyframes slide-up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes bounce-slow{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(0);animation-timing-function:cubic-bezier(0,0,.2,1)}}
+    .animate-fade-in{animation:fade-in .8s ease-out both}
+    .animate-slide-up{animation:slide-up .8s ease-out both}
+    .animate-bounce-slow{animation:bounce-slow 3s ease-in-out infinite}
+    .animate-bounce{animation:bounce 1s infinite}
+    .animation-delay-200{animation-delay:.2s;animation-fill-mode:backwards}
+    .animation-delay-400{animation-delay:.4s;animation-fill-mode:backwards}
+    .animation-delay-600{animation-delay:.6s;animation-fill-mode:backwards}
+    .animation-delay-800{animation-delay:.8s;animation-fill-mode:backwards}
+    button{transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease}
+    button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--em-500);outline-offset:2px}
+
+    /* LAYOUT */
+    .container{width:100%;max-width:1280px;margin:0 auto;padding:0 1rem}
+    @media(min-width:640px){.container{padding:0 1.5rem}}
+    @media(min-width:1024px){.container{padding:0 2rem}}
+    .hidden{display:none!important}
+
+    /* ─── HEADER ─── */
+    #site-header{position:fixed;top:0;left:0;right:0;z-index:50;transition:all .3s}
+    #site-header.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+    html.dark #site-header.scrolled{background:rgba(17,24,39,.95)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:5rem}
+    .logo-wrap{flex-shrink:0;cursor:pointer}
+    .logo-wrap img{height:3rem;width:auto;display:block}
+    .desktop-nav{display:none;align-items:center;gap:.25rem}
+    @media(min-width:768px){.desktop-nav{display:flex}}
+    .nav-link{padding:.5rem 1rem;border-radius:.5rem;font-size:.875rem;font-weight:500;border:none;cursor:pointer;background:none;font-family:inherit;transition:all .2s;color:var(--gray-700)}
+    html.dark .nav-link{color:var(--gray-300)}
+    #site-header:not(.scrolled) .nav-link{color:#fff}
+    #site-header:not(.scrolled) .nav-link:hover{background:rgba(255,255,255,.1);color:#fff}
+    .nav-link:hover{background:var(--em-50);color:var(--em-700)}
+    html.dark .nav-link:hover{background:rgba(4,120,87,.2);color:var(--em-400)}
+    .header-right{display:flex;align-items:center;gap:.5rem}
+    .icon-btn{display:flex;align-items:center;justify-content:center;padding:.5rem;border-radius:9999px;border:none;cursor:pointer;background:none;color:var(--gray-700);transition:all .2s}
+    html.dark .icon-btn{color:var(--gray-300)}
+    #site-header:not(.scrolled) .icon-btn{color:#fff}
+    .icon-btn:hover{background:var(--em-50);color:var(--em-700)}
+    html.dark .icon-btn:hover{background:rgba(4,120,87,.2);color:var(--em-400)}
+    #site-header:not(.scrolled) .icon-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+    .hamburger-btn{display:flex}
+    @media(min-width:768px){.hamburger-btn{display:none}}
+    #mobile-menu{display:none;padding:1rem 0;background:#fff;border-radius:0 0 .5rem .5rem;box-shadow:0 4px 24px rgba(0,0,0,.1)}
+    html.dark #mobile-menu{background:var(--gray-900)}
+    #mobile-menu.open{display:block}
+    .mob-btn{display:block;width:100%;text-align:left;padding:.75rem 1rem;font-size:.95rem;font-family:inherit;border:none;cursor:pointer;background:none;color:var(--gray-700);transition:background .2s,color .2s}
+    html.dark .mob-btn{color:var(--gray-300)}
+    .mob-btn:hover{background:var(--em-50);color:var(--em-700)}
+    html.dark .mob-btn:hover{background:rgba(4,120,87,.2);color:var(--em-400)}
+
+    /* ─── HERO ─── */
+    #home{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;z-index:0}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,78,59,.9) 0%,rgba(4,120,87,.85) 50%,rgba(17,24,39,.9) 100%)}
+    .hero-grid{position:absolute;inset:0;opacity:.1;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:50px 50px}
+    .hero-wrap{position:relative;z-index:10;width:100%;padding:8rem 1rem}
+    @media(min-width:640px){.hero-wrap{padding:8rem 1.5rem}}
+    .hero-inner{max-width:56rem;margin:0 auto;text-align:center}
+    .location-badge{display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:9999px;background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.2);margin-bottom:2rem}
+    .location-badge span{font-size:.875rem;font-weight:500;color:var(--cream-100)}
+    .hero-h1{font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;color:var(--cream-50);margin-bottom:1.5rem;line-height:1.1;letter-spacing:-.02em}
+    .hero-subhead{font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--cream-100);margin-bottom:2rem}
+    .hero-desc{font-size:1.125rem;color:#fff;margin-bottom:3rem;max-width:48rem;margin-left:auto;margin-right:auto;line-height:1.75}
+    html.dark .hero-desc{color:rgba(245,242,237,.9)}
+    .hero-btns{display:flex;flex-direction:column;gap:1rem;justify-content:center;align-items:center}
+    @media(min-width:640px){.hero-btns{flex-direction:row}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;font-size:1.125rem;font-weight:600;border-radius:.75rem;border:none;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .3s}
+    .btn:hover{transform:scale(1.05)}
+    .btn-cream{background:var(--cream-50);color:var(--em-900);box-shadow:0 10px 40px rgba(0,0,0,.2)}
+    .btn-cream:hover{background:var(--cream-100);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .btn-outline-white{background:rgba(255,255,255,.1);backdrop-filter:blur(4px);color:var(--cream-50);border:2px solid rgba(253,252,251,.5)}
+    .btn-outline-white:hover{background:rgba(255,255,255,.2)}
+    .btn-whatsapp{background:var(--em-600);color:#fff;border:0;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+    .btn-whatsapp:hover{background:var(--em-700)}
+    .trust-strip{margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.2);display:grid;grid-template-columns:1fr;gap:2rem;color:var(--cream-100)}
+    @media(min-width:640px){.trust-strip{grid-template-columns:repeat(3,1fr)}}
+    .trust-val{font-size:1.875rem;font-weight:700;color:var(--cream-50);margin-bottom:.5rem;display:flex;align-items:center;justify-content:center;gap:.25rem}
+    .trust-label{font-size:.875rem}
+    .scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:10}
+    .scroll-mouse{width:1.5rem;height:2.5rem;border:2px solid rgba(250,248,245,.5);border-radius:9999px;display:flex;align-items:flex-start;justify-content:center;padding:.5rem}
+    .scroll-dot{width:.375rem;height:.75rem;background:rgba(250,248,245,.5);border-radius:9999px}
+
+    /* ─── SHARED SECTION ─── */
+    section{padding:5rem 0}
+    .sec-hdr{text-align:center;margin-bottom:4rem}
+    .sec-h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;color:var(--gray-900);margin-bottom:1rem}
+    html.dark .sec-h2{color:var(--cream-50)}
+    .sec-sub{font-size:1.25rem;color:var(--gray-600);max-width:48rem;margin:0 auto;line-height:1.7}
+    html.dark .sec-sub{color:var(--gray-300)}
+
+    /* ─── SERVICES ─── */
+    #services{background:linear-gradient(135deg,var(--gray-50) 0%,rgba(253,252,251,.3) 100%)}
+    html.dark #services{background:linear-gradient(135deg,var(--gray-900) 0%,var(--gray-800) 100%)}
+    /* 4-column tabs (lg), 2-col (md), 1-col (mobile) */
+    .tabs-list{display:grid;grid-template-columns:1fr;gap:.5rem;width:100%;max-width:72rem;margin:0 auto 3rem;background:#fff;padding:.5rem;border-radius:.75rem;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+    @media(min-width:768px){.tabs-list{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.tabs-list{grid-template-columns:repeat(4,1fr)}}
+    html.dark .tabs-list{background:var(--gray-800)}
+    .tab-btn{padding:1rem .5rem;font-size:1rem;font-weight:600;font-family:inherit;border:none;border-radius:.5rem;cursor:pointer;background:none;color:var(--gray-700);transition:all .2s;white-space:normal;text-align:center;line-height:1.3}
+    html.dark .tab-btn{color:var(--gray-300)}
+    .tab-btn:hover{background:var(--gray-100)}
+    html.dark .tab-btn:hover{background:var(--gray-700)}
+    .tab-btn.active{background:var(--em-600);color:#fff}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .tab-img{margin-bottom:2rem;border-radius:1rem;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+    .tab-img img{width:100%;height:16rem;object-fit:cover;display:block}
+    .g3{display:grid;grid-template-columns:1fr;gap:1.5rem}
+    @media(min-width:768px){.g3{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.g3{grid-template-columns:repeat(3,1fr)}}
+    .g2{display:grid;grid-template-columns:1fr;gap:1.5rem}
+    @media(min-width:768px){.g2{grid-template-columns:repeat(2,1fr)}}
+    .card{border-radius:.75rem;border:2px solid var(--gray-200);background:#fff;color:var(--gray-900);box-shadow:0 1px 3px rgba(0,0,0,.07);transition:all .3s;overflow:hidden}
+    html.dark .card{background:var(--gray-800);border-color:var(--gray-700);color:var(--cream-50)}
+    .card:hover{box-shadow:0 20px 60px rgba(0,0,0,.12);transform:translateY(-4px);border-color:var(--em-500)}
+    html.dark .card:hover{border-color:var(--em-400)}
+    .card-hdr{padding:1.5rem 1.5rem 0}
+    .card-bod{padding:0 1.5rem 1.5rem}
+    .svc-icon{display:inline-flex;padding:.75rem;border-radius:.75rem;background:var(--em-100);color:var(--em-700);margin-bottom:1rem;transition:transform .3s}
+    html.dark .svc-icon{background:rgba(6,78,59,.3);color:var(--em-400)}
+    .card:hover .svc-icon{transform:scale(1.1)}
+    .svc-title{font-size:1.25rem;font-weight:600;color:var(--gray-900);transition:color .2s;line-height:1.25}
+    html.dark .svc-title{color:var(--cream-50)}
+    .card:hover .svc-title{color:var(--em-700)}
+    html.dark .card:hover .svc-title{color:var(--em-400)}
+    .svc-desc{font-size:.875rem;color:var(--gray-500);line-height:1.75;margin-top:.375rem}
+    .focus-banner{margin-top:2rem;padding:1.5rem;background:var(--em-50);border:2px solid var(--em-200);border-radius:.75rem;text-align:center;color:var(--gray-700);font-size:.95rem}
+    html.dark .focus-banner{background:rgba(6,78,59,.2);border-color:var(--em-800);color:var(--gray-300)}
+
+    /* ─── ABOUT ─── */
+    #about{background:#fff}
+    html.dark #about{background:var(--gray-900)}
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:4rem}
+    @media(min-width:1024px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+    .stat-card{background:linear-gradient(135deg,var(--em-50) 0%,var(--cream-50) 100%);padding:1.5rem;border-radius:.75rem;text-align:center;border:2px solid var(--em-200);transition:all .3s}
+    html.dark .stat-card{background:linear-gradient(135deg,rgba(6,78,59,.2) 0%,var(--gray-800) 100%);border-color:var(--em-800)}
+    .stat-card:hover{box-shadow:0 10px 30px rgba(0,0,0,.1);transform:translateY(-4px)}
+    .stat-val{font-size:2.25rem;font-weight:700;color:var(--em-700);margin-bottom:.5rem}
+    html.dark .stat-val{color:var(--em-400)}
+    .stat-label{font-size:.875rem;font-weight:500;color:var(--gray-600)}
+    html.dark .stat-label{color:var(--gray-400)}
+    .ben-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-bottom:3rem}
+    @media(min-width:768px){.ben-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.ben-grid{grid-template-columns:repeat(3,1fr)}}
+    .ben-card{border-radius:.75rem;border:2px solid var(--gray-200);background:#fff;transition:all .3s}
+    html.dark .ben-card{background:var(--gray-800);border-color:var(--gray-700)}
+    .ben-card:hover{border-color:var(--em-500);box-shadow:0 20px 60px rgba(0,0,0,.1);transform:translateY(-4px)}
+    html.dark .ben-card:hover{border-color:var(--em-400)}
+    .ben-inner{padding:1.5rem;display:flex;align-items:flex-start;gap:1rem}
+    .ben-icon{flex-shrink:0;padding:.75rem;border-radius:.75rem;background:var(--em-100);color:var(--em-700)}
+    html.dark .ben-icon{background:rgba(6,78,59,.3);color:var(--em-400)}
+    .ben-title{font-size:1.125rem;font-weight:600;color:var(--gray-900);margin-bottom:.5rem}
+    html.dark .ben-title{color:var(--cream-50)}
+    .ben-desc{font-size:.875rem;color:var(--gray-600);line-height:1.65}
+    html.dark .ben-desc{color:var(--gray-400)}
+    .val-banner{background:linear-gradient(90deg,var(--em-600) 0%,var(--em-700) 100%);border-radius:1rem;padding:2rem;color:#fff;box-shadow:0 25px 60px rgba(5,150,105,.3)}
+    html.dark .val-banner{background:linear-gradient(90deg,var(--em-800) 0%,var(--em-900) 100%)}
+    @media(min-width:768px){.val-banner{padding:3rem}}
+    .val-banner h3{font-size:1.875rem;font-weight:700;text-align:center;margin-bottom:1.5rem}
+    .val-cols{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:56rem;margin:0 auto}
+    @media(min-width:768px){.val-cols{grid-template-columns:1fr 1fr}}
+    .chk-row{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem}
+    .chk-row:last-child{margin-bottom:0}
+    .chk-row p{color:var(--cream-100)}
+
+    /* ─── COMPLIANCE ─── */
+    #compliance{background:linear-gradient(135deg,var(--gray-50) 0%,rgba(253,252,251,.3) 100%)}
+    html.dark #compliance{background:linear-gradient(135deg,var(--gray-900) 0%,var(--gray-800) 100%)}
+    .shield-ico-wrap{display:inline-flex;align-items:center;justify-content:center;padding:.75rem;background:var(--em-100);border-radius:9999px;margin-bottom:1rem;color:var(--em-700)}
+    html.dark .shield-ico-wrap{background:rgba(6,78,59,.3);color:var(--em-400)}
+    .popia-alert{margin-bottom:3rem;padding:1rem 1.25rem;background:var(--em-50);border:2px solid var(--em-500);border-radius:.75rem;display:flex;align-items:flex-start;gap:.75rem;font-size:1rem;line-height:1.7;color:var(--gray-700)}
+    html.dark .popia-alert{background:rgba(6,78,59,.2);border-color:var(--em-600);color:var(--gray-300)}
+    .popia-icon{color:var(--em-700);flex-shrink:0;margin-top:2px}
+    html.dark .popia-icon{color:var(--em-400)}
+    .comp-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-bottom:3rem}
+    @media(min-width:768px){.comp-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.comp-grid{grid-template-columns:repeat(3,1fr)}}
+    .comp-card{border-radius:.75rem;border:2px solid var(--gray-200);background:#fff;transition:all .3s;overflow:hidden}
+    html.dark .comp-card{background:var(--gray-800);border-color:var(--gray-700)}
+    .comp-card:hover{border-color:var(--em-500);box-shadow:0 20px 60px rgba(0,0,0,.1)}
+    html.dark .comp-card:hover{border-color:var(--em-400)}
+    .comp-hdr{padding:1.5rem 1.5rem 0;display:flex;align-items:center;gap:.75rem}
+    .comp-ico{padding:.5rem;border-radius:.5rem;background:var(--em-100);color:var(--em-700);flex-shrink:0}
+    html.dark .comp-ico{background:rgba(6,78,59,.3);color:var(--em-400)}
+    .comp-ttl{font-size:1.125rem;font-weight:600;color:var(--gray-900)}
+    html.dark .comp-ttl{color:var(--cream-50)}
+    .comp-bod{padding:.75rem 1.5rem 1.5rem;font-size:.875rem;color:var(--gray-600);line-height:1.65}
+    html.dark .comp-bod{color:var(--gray-400)}
+    .data-card{max-width:56rem;margin:0 auto;border-radius:.75rem;border:2px solid var(--gray-200);background:#fff}
+    html.dark .data-card{background:var(--gray-800);border-color:var(--gray-700)}
+    .data-body{padding:2rem}
+    .data-body h3{font-size:1.5rem;font-weight:700;color:var(--gray-900);margin-bottom:1rem}
+    html.dark .data-body h3{color:var(--cream-50)}
+    .data-p{color:var(--gray-600);margin-bottom:1rem;line-height:1.75;font-size:.95rem}
+    html.dark .data-p{color:var(--gray-400)}
+    .data-p strong{color:var(--gray-900)}
+    html.dark .data-p strong{color:var(--cream-50)}
+    .data-foot{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--gray-200);text-align:center;color:var(--gray-600);font-size:.95rem}
+    html.dark .data-foot{border-color:var(--gray-700);color:var(--gray-400)}
+    .em-lnk{color:var(--em-700);font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;font-family:inherit;font-size:inherit}
+    html.dark .em-lnk{color:var(--em-400)}
+    .em-lnk:hover{text-decoration:underline}
+
+    /* ─── CONTACT ─── */
+    #contact{background:#fff}
+    html.dark #contact{background:var(--gray-900)}
+    .cont-grid{display:grid;grid-template-columns:1fr;gap:3rem;max-width:72rem;margin:0 auto}
+    @media(min-width:1024px){.cont-grid{grid-template-columns:1fr 1fr}}
+    .ci-h3{font-size:1.5rem;font-weight:700;color:var(--gray-900);margin-bottom:1.5rem}
+    html.dark .ci-h3{color:var(--cream-50)}
+    .ci-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+    .ci-icon{flex-shrink:0;padding:.75rem;border-radius:.75rem;background:var(--em-100);color:var(--em-700);transition:transform .3s}
+    html.dark .ci-icon{background:rgba(6,78,59,.3);color:var(--em-400)}
+    .ci-item:hover .ci-icon{transform:scale(1.1)}
+    .ci-label{font-weight:600;color:var(--gray-900);margin-bottom:.25rem;font-size:.95rem}
+    html.dark .ci-label{color:var(--cream-50)}
+    .ci-val{color:var(--gray-600);font-size:.95rem;text-decoration:none;transition:color .2s}
+    html.dark .ci-val{color:var(--gray-400)}
+    .ci-val:hover{color:var(--em-700)}
+    html.dark .ci-val:hover{color:var(--em-400)}
+    .info-box{background:linear-gradient(135deg,var(--em-50) 0%,var(--cream-50) 100%);padding:1.5rem;border-radius:.75rem;border:2px solid var(--em-200);margin-top:2rem}
+    html.dark .info-box{background:linear-gradient(135deg,rgba(6,78,59,.2) 0%,var(--gray-800) 100%);border-color:var(--em-800)}
+    .ib-title{font-weight:600;color:var(--gray-900);margin-bottom:1rem}
+    html.dark .ib-title{color:var(--cream-50)}
+    .hrs-row{display:flex;justify-content:space-between;color:var(--gray-600);font-size:.95rem;margin-bottom:.5rem}
+    html.dark .hrs-row{color:var(--gray-400)}
+    .hrs-row .bld{font-weight:500}
+    .emergency{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--em-200);color:var(--em-700);font-weight:600;font-size:.95rem}
+    html.dark .emergency{border-color:var(--em-800);color:var(--em-400)}
+    .em-email{display:inline-flex;align-items:center;gap:.5rem;color:var(--em-700);font-weight:600;font-size:.95rem;text-decoration:none}
+    html.dark .em-email{color:var(--em-400)}
+    .em-email:hover{text-decoration:underline}
+    .em-divider{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--em-200)}
+    html.dark .em-divider{border-color:var(--em-800)}
+    .info-txt{color:var(--gray-600);font-size:.95rem;margin-bottom:.5rem}
+    html.dark .info-txt{color:var(--gray-400)}
+    .cf-box{background:linear-gradient(135deg,var(--gray-50) 0%,rgba(253,252,251,.3) 100%);padding:2rem;border-radius:1rem;border:2px solid var(--gray-200)}
+    html.dark .cf-box{background:linear-gradient(135deg,var(--gray-800) 0%,var(--gray-700) 100%);border-color:var(--gray-600)}
+    .cf-title{font-size:1.5rem;font-weight:700;color:var(--gray-900);margin-bottom:1.5rem}
+    html.dark .cf-title{color:var(--cream-50)}
+    .fg{margin-bottom:1.5rem}
+    .fl{display:block;font-size:.9rem;font-weight:500;color:var(--gray-700);margin-bottom:.25rem}
+    html.dark .fl{color:var(--gray-300)}
+    input[type="text"],input[type="email"],textarea{width:100%;padding:.625rem .75rem;margin-top:.25rem;border:1px solid var(--gray-300);border-radius:calc(var(--radius) - 2px);font-size:.9rem;font-family:inherit;background:#fff;color:var(--gray-900);transition:border-color .2s,box-shadow .2s;outline:none}
+    html.dark input[type="text"],html.dark input[type="email"],html.dark textarea{background:var(--gray-700);border-color:var(--gray-600);color:var(--cream-50)}
+    input::placeholder,textarea::placeholder{color:var(--gray-400)}
+    input:focus,textarea:focus{border-color:var(--em-500);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+    textarea{resize:vertical}
+    .cbx-row{display:flex;align-items:flex-start;gap:.75rem}
+    .cbx-row input[type="checkbox"]{width:auto;margin-top:.2rem;flex-shrink:0;accent-color:var(--em-600);cursor:pointer}
+    .cbx-lbl{font-size:.875rem;color:var(--gray-600);cursor:pointer;line-height:1.65}
+    html.dark .cbx-lbl{color:var(--gray-400)}
+    .btn-sub{width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;font-size:1.125rem;font-weight:600;border-radius:.75rem;border:none;cursor:pointer;font-family:inherit;background:var(--em-600);color:#fff;box-shadow:0 4px 16px rgba(5,150,105,.3);transition:all .3s}
+    .btn-sub:hover{background:var(--em-700);box-shadow:0 8px 24px rgba(5,150,105,.4);transform:scale(1.01)}
+    .fn{text-align:center;font-size:.75rem;color:var(--gray-500);margin-top:.75rem}
+
+    /* ─── FOOTER ─── */
+    footer{background:var(--gray-900);color:var(--gray-300)}
+    html.dark footer{background:var(--gray-950)}
+    .ft-main{padding:4rem 0}
+    .ft-grid{display:grid;grid-template-columns:1fr;gap:3rem}
+    @media(min-width:768px){.ft-grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:1024px){.ft-grid{grid-template-columns:2fr 1fr 1fr 1fr}}
+    .ft-logo{height:3rem;width:auto;margin-bottom:1rem;display:block}
+    .ft-desc{font-size:.875rem;color:var(--gray-400);line-height:1.75;margin-bottom:1rem}
+    .ft-social{display:flex;gap:1rem}
+    .ft-soc-a{color:var(--gray-400);transition:color .2s;display:flex;align-items:center;text-decoration:none}
+    .ft-soc-a:hover{color:var(--em-400)}
+    .ft-col-h{color:#fff;font-weight:600;font-size:1.125rem;margin-bottom:1rem}
+    .ft-ul{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+    .ft-ul li{font-size:.875rem}
+    .ft-nb{background:none;border:none;cursor:pointer;color:var(--gray-400);font-family:inherit;font-size:.875rem;padding:0;transition:color .2s;text-align:left}
+    .ft-nb:hover{color:var(--em-400)}
+    .ft-svc{color:var(--gray-400);font-size:.875rem}
+    .ft-ci{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem}
+    .ft-ci:last-child{margin-bottom:0}
+    .ft-ci-ico{color:var(--em-400);flex-shrink:0;margin-top:2px}
+    .ft-ci-lbl{font-size:.875rem;font-weight:500;color:#fff}
+    .ft-ci-val{font-size:.875rem;color:var(--gray-400);text-decoration:none;transition:color .2s}
+    .ft-ci-val:hover{color:var(--em-400)}
+    .ft-bot{border-top:1px solid var(--gray-800);padding:1.5rem 0}
+    .ft-bot-inner{display:flex;flex-direction:column;align-items:center;gap:1rem}
+    @media(min-width:768px){.ft-bot-inner{flex-direction:row;justify-content:space-between}}
+    .ft-copy{font-size:.875rem;color:var(--gray-400)}
+    .ft-legal{display:flex;gap:1.5rem}
+    .ft-leg-btn{font-size:.875rem;color:var(--gray-400);background:none;border:none;cursor:pointer;font-family:inherit;transition:color .2s}
+    .ft-leg-btn:hover{color:var(--em-400)}
+
+    /* ─── WHATSAPP FAB ─── */
+    #wa-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;background:var(--em-600);color:#fff;border:none;border-radius:9999px;padding:1rem;cursor:pointer;box-shadow:0 25px 50px rgba(0,0,0,.25);transition:background .3s,transform .3s,box-shadow .3s;display:flex;align-items:center;justify-content:center}
+    #wa-fab:hover{background:var(--em-700);transform:scale(1.1);box-shadow:0 25px 50px rgba(5,150,105,.5)}
+    .wa-tip{position:absolute;right:calc(100% + .75rem);top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--gray-900);color:#fff;padding:.5rem 1rem;border-radius:.5rem;font-size:.875rem;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s}
+    #wa-fab:hover .wa-tip{opacity:1}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo-wrap" onclick="goTo('home')" role="button" tabindex="0">
+        <img src="https://customer-assets.emergentagent.com/job_2ed4bce7-c51f-463a-afe4-6627afad08d6/artifacts/ar6bsgvr_logo%20width_250.webp" alt="Clevertel SA Group" />
+      </div>
+      <nav class="desktop-nav">
+        <button class="nav-link" onclick="goTo('home')">Home</button>
+        <button class="nav-link" onclick="goTo('services')">Services</button>
+        <button class="nav-link" onclick="goTo('about')">About Us</button>
+        <button class="nav-link" onclick="goTo('compliance')">Compliance</button>
+        <button class="nav-link" onclick="goTo('contact')">Contact</button>
+      </nav>
+      <div class="header-right">
+        <button class="icon-btn" id="theme-btn" aria-label="Toggle dark mode">
+          <span id="ico-moon"><i data-lucide="moon" style="width:20px;height:20px"></i></span>
+          <span id="ico-sun" class="hidden"><i data-lucide="sun" style="width:20px;height:20px"></i></span>
+        </button>
+        <button class="icon-btn hamburger-btn" id="menu-btn" aria-label="Menu">
+          <span id="ico-menu"><i data-lucide="menu" style="width:24px;height:24px"></i></span>
+          <span id="ico-x" class="hidden"><i data-lucide="x" style="width:24px;height:24px"></i></span>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu">
+      <button class="mob-btn" onclick="goTo('home');closeMob()">Home</button>
+      <button class="mob-btn" onclick="goTo('services');closeMob()">Services</button>
+      <button class="mob-btn" onclick="goTo('about');closeMob()">About Us</button>
+      <button class="mob-btn" onclick="goTo('compliance');closeMob()">Compliance</button>
+      <button class="mob-btn" onclick="goTo('contact');closeMob()">Contact</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1762163516269-3c143e04175c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwxfHxJVCUyMG5ldHdvcmslMjBzZXJ2ZXIlMjB0ZWNobm9sb2d5fGVufDB8fHx8MTc2OTc3MTM0NXww&ixlib=rb-4.1.0&q=85" alt="IT Infrastructure" />
+    <div class="hero-overlay"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <div class="location-badge animate-fade-in"><span>Pretoria East, South Africa</span></div>
+      <h1 class="hero-h1 animate-slide-up">Managed IT, Business Automation &amp; Messaging Solutions</h1>
+      <p class="hero-subhead animate-slide-up animation-delay-200">Your trusted IT MSP and digital communications partner in Pretoria East</p>
+      <p class="hero-desc animate-slide-up animation-delay-400">Clevertel SA Group delivers secure IT services, no-code business tools, and powerful messaging platforms that help organizations connect, automate, and grow — while staying compliant.</p>
+      <div class="hero-btns animate-slide-up animation-delay-600">
+        <button class="btn btn-cream" onclick="goTo('contact')">Contact Us <i data-lucide="arrow-right" style="width:20px;height:20px"></i></button>
+        <button class="btn btn-outline-white" onclick="goTo('services')">View Services</button>
+        <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/27750467727','_blank')"><i data-lucide="message-circle" style="width:20px;height:20px"></i> Chat on WhatsApp</button>
+      </div>
+      <div class="trust-strip animate-fade-in animation-delay-800">
+        <div><div class="trust-val">24/7</div><div class="trust-label">IT Support</div></div>
+        <div><div class="trust-val">POPIA</div><div class="trust-label">Compliant</div></div>
+        <div><div class="trust-val"><i data-lucide="phone" style="width:24px;height:24px"></i> 012 023 2599</div><div class="trust-label">Direct Line</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator animate-bounce" aria-hidden="true">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="sec-hdr">
+      <h2 class="sec-h2">Our Services</h2>
+      <p class="sec-sub">Comprehensive IT solutions tailored to your business needs</p>
+    </div>
+    <!-- 4-col tabs -->
+    <div class="tabs-list" role="tablist">
+      <button class="tab-btn" id="tab-managed-it" role="tab" aria-selected="false" onclick="switchTab('managed-it')">Managed IT Services</button>
+      <button class="tab-btn" id="tab-automation" role="tab" aria-selected="false" onclick="switchTab('automation')">Business Automation</button>
+      <button class="tab-btn active" id="tab-messaging" role="tab" aria-selected="true" onclick="switchTab('messaging')">Messaging &amp; Engagement</button>
+      <button class="tab-btn" id="tab-email-security" role="tab" aria-selected="false" onclick="switchTab('email-security')">Email Security &amp; Protection</button>
+    </div>
+
+    <!-- Managed IT -->
+    <div class="tab-panel" id="panel-managed-it">
+      <div class="tab-img"><img src="https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxkYXRhJTIwY2VudGVyJTIwY2xvdWQlMjBpbmZyYXN0cnVjdHVyZXxlbnwwfHx8fDE3Njk3NzEzNTB8MA&ixlib=rb-4.1.0&q=85" alt="Managed IT Services" /></div>
+      <div class="g3">
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="server" style="width:24px;height:24px"></i></div><div class="svc-title">PBX (Virtual &amp; On-Prem)</div></div><div class="card-bod"><p class="svc-desc">Enterprise-grade phone systems with crystal-clear voice quality, advanced call routing, and unified communications.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="mail" style="width:24px;height:24px"></i></div><div class="svc-title">Email Hosting</div></div><div class="card-bod"><p class="svc-desc">Secure, reliable email hosting with 99.9% uptime, spam protection, and full POPIA compliance.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="cloud" style="width:24px;height:24px"></i></div><div class="svc-title">Managed VPS</div></div><div class="card-bod"><p class="svc-desc">Scalable virtual private servers with automatic backups, monitoring, and 24/7 technical support.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="wifi" style="width:24px;height:24px"></i></div><div class="svc-title">Internet Connectivity</div></div><div class="card-bod"><p class="svc-desc">High-speed, reliable internet solutions tailored to your business needs with redundancy options.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="headphones" style="width:24px;height:24px"></i></div><div class="svc-title">IT Support</div></div><div class="card-bod"><p class="svc-desc">24/7 helpdesk support with rapid response times and proactive issue resolution.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="shield" style="width:24px;height:24px"></i></div><div class="svc-title">Patch Management</div></div><div class="card-bod"><p class="svc-desc">Automated security updates and patch deployment to keep your systems secure and compliant.</p></div></div>
+      </div>
+      <div class="focus-banner"><strong>Focus on:</strong> Uptime, Security, Proactive Support &amp; Business Continuity</div>
+    </div>
+
+    <!-- Business Automation -->
+    <div class="tab-panel" id="panel-automation">
+      <div class="tab-img"><img src="https://images.unsplash.com/photo-1759752393975-7ca7b302fcc6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGF1dG9tYXRpb24lMjB3b3JrZmxvd3xlbnwwfHx8fDE3Njk3NzEzNTZ8MA&ixlib=rb-4.1.0&q=85" alt="Business Automation" /></div>
+      <div class="g2">
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="zap" style="width:24px;height:24px"></i></div><div class="svc-title">No-Code / Low-Code Development</div></div><div class="card-bod"><p class="svc-desc">Rapid application development without extensive coding, reducing time-to-market by up to 70%.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="layout" style="width:24px;height:24px"></i></div><div class="svc-title">Workflow Automation</div></div><div class="card-bod"><p class="svc-desc">Streamline repetitive tasks and business processes with intelligent automation solutions.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="database" style="width:24px;height:24px"></i></div><div class="svc-title">Internal Systems &amp; Dashboards</div></div><div class="card-bod"><p class="svc-desc">Custom business intelligence dashboards and internal tools built for your specific needs.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="bar-chart-2" style="width:24px;height:24px"></i></div><div class="svc-title">CRM &amp; ERP Customization</div></div><div class="card-bod"><p class="svc-desc">Tailored CRM and ERP solutions that fit your unique business processes and requirements.</p></div></div>
+      </div>
+      <div class="focus-banner"><strong>Focus on:</strong> Faster Deployment, Reduced Costs, Scalable Systems &amp; Innovation</div>
+    </div>
+
+    <!-- Messaging & Engagement (default active) -->
+    <div class="tab-panel active" id="panel-messaging">
+      <div class="tab-img"><img src="https://images.unsplash.com/photo-1758876018643-71ee5951ab0a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBtZXNzYWdpbmclMjBidXNpbmVzcyUyMGNvbW11bmljYXRpb258ZW58MHx8fHwxNzY5NzcxMzYyfDA&ixlib=rb-4.1.0&q=85" alt="Messaging Solutions" /></div>
+      <div class="g3">
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="hash" style="width:24px;height:24px"></i></div><div class="svc-title">USSD</div></div><div class="card-bod"><p class="svc-desc">Gain invaluable insights into consumer preferences or run competitions and surveys using interactive USSD.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="hash" style="width:24px;height:24px"></i></div><div class="svc-title">Short Codes</div></div><div class="card-bod"><p class="svc-desc">Capture leads effortlessly with custom short code solutions for maximum engagement.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="globe" style="width:24px;height:24px"></i></div><div class="svc-title">Plugin (Web-Based Messaging)</div></div><div class="card-bod"><p class="svc-desc">Manage mobile messaging campaigns, review analytics, and control communications via a powerful web platform.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="bot" style="width:24px;height:24px"></i></div><div class="svc-title">Genius Bot (WhatsApp Automation)</div></div><div class="card-bod"><p class="svc-desc">Leverage the popularity of WhatsApp to connect with audiences on a personal level with intelligent automation.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="send" style="width:24px;height:24px"></i></div><div class="svc-title">Bulk SMS</div></div><div class="card-bod"><p class="svc-desc">Reach customers with reliable bulk SMS for marketing, promotions, and urgent notifications.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="file-text" style="width:24px;height:24px"></i></div><div class="svc-title">Genius SMS</div></div><div class="card-bod"><p class="svc-desc">Replace traditional leaflets with digital flyers using smart digital messaging solutions.</p></div></div>
+      </div>
+      <div class="focus-banner"><strong>Focus on:</strong> Customer Reach, Engagement Analytics, Compliance-Ready Delivery &amp; Personal Connection</div>
+    </div>
+
+    <!-- Email Security & Protection (NEW TAB) -->
+    <div class="tab-panel" id="panel-email-security">
+      <div class="tab-img"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?crop=entropy&cs=srgb&fm=jpg&q=85" alt="Email Security &amp; Protection" /></div>
+      <div class="g3">
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="shield-check" style="width:24px;height:24px"></i></div><div class="svc-title">DMARC</div></div><div class="card-bod"><p class="svc-desc">Domain-based Message Authentication, Reporting &amp; Conformance to protect your email domain from unauthorized use and spoofing.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="shield" style="width:24px;height:24px"></i></div><div class="svc-title">SPF &amp; DKIM</div></div><div class="card-bod"><p class="svc-desc">Sender Policy Framework and DomainKeys Identified Mail to verify email authenticity and prevent domain spoofing.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="shield-alert" style="width:24px;height:24px"></i></div><div class="svc-title">Anti-Phishing</div></div><div class="card-bod"><p class="svc-desc">Advanced phishing detection and prevention to protect your organization from email-based attacks and credential theft.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="lock" style="width:24px;height:24px"></i></div><div class="svc-title">Anti-Spoofing</div></div><div class="card-bod"><p class="svc-desc">Comprehensive protection against email spoofing and impersonation attacks targeting your business.</p></div></div>
+        <div class="card"><div class="card-hdr"><div class="svc-icon"><i data-lucide="eye" style="width:24px;height:24px"></i></div><div class="svc-title">Email Threat Monitoring</div></div><div class="card-bod"><p class="svc-desc">24/7 monitoring and real-time threat intelligence to detect and respond to email security incidents promptly.</p></div></div>
+      </div>
+      <div class="focus-banner"><strong>Focus on:</strong> Email Authentication, Threat Prevention, Real-Time Monitoring &amp; Domain Protection</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-hdr">
+      <h2 class="sec-h2">Why Choose Clevertel SA Group</h2>
+      <p class="sec-sub">Choosing Clevertel SA Group means partnering with a team that understands IT infrastructure, automation, and digital communication</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val">15+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat-card"><div class="stat-val">500+</div><div class="stat-label">Clients Served</div></div>
+      <div class="stat-card"><div class="stat-val">99.9%</div><div class="stat-label">Uptime Guarantee</div></div>
+      <div class="stat-card"><div class="stat-val">&lt;30min</div><div class="stat-label">Support Response</div></div>
+    </div>
+    <div class="ben-grid">
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="shield" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Secure Communications</h3><p class="ben-desc">Email hosting with enterprise-grade security and password management solutions</p></div></div></div>
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="zap" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Unified Communications</h3><p class="ben-desc">Virtual PBX and integrated communication platforms for seamless collaboration</p></div></div></div>
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="trending-up" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Proactive Monitoring</h3><p class="ben-desc">IT monitoring and automated patch management for optimal performance</p></div></div></div>
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="cloud" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Scalable Infrastructure</h3><p class="ben-desc">Cloud and VPS solutions that grow with your business needs</p></div></div></div>
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="users" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Custom Solutions</h3><p class="ben-desc">Tailored no-code/low-code systems designed for your workflow</p></div></div></div>
+      <div class="ben-card"><div class="ben-inner"><div class="ben-icon"><i data-lucide="award" style="width:24px;height:24px"></i></div><div><h3 class="ben-title">Enterprise Messaging</h3><p class="ben-desc">Professional-grade messaging platforms with comprehensive analytics</p></div></div></div>
+    </div>
+    <div class="val-banner">
+      <h3>Your Complete IT &amp; Digital Communications Partner</h3>
+      <div class="val-cols">
+        <div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>Enterprise-grade infrastructure and security</p></div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>24/7 monitoring and rapid incident response</p></div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>POPIA-compliant data handling and storage</p></div>
+        </div>
+        <div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>Scalable solutions that grow with your business</p></div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>Cost-effective automation and messaging platforms</p></div>
+          <div class="chk-row"><i data-lucide="check" style="width:24px;height:24px;flex-shrink:0;margin-top:2px"></i><p>Local support team in Pretoria East</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="shield-ico-wrap"><i data-lucide="shield" style="width:32px;height:32px"></i></div>
+      <h2 class="sec-h2">POPIA &amp; Data Protection Commitment</h2>
+      <p class="sec-sub">Your privacy and data security are our top priorities. We are fully committed to compliance with the Protection of Personal Information Act (POPIA)</p>
+    </div>
+    <div class="popia-alert">
+      <span class="popia-icon"><i data-lucide="shield" style="width:20px;height:20px"></i></span>
+      <span><strong>POPIA Compliance Statement:</strong> Clevertel SA Group is committed to protecting your personal information in accordance with the Protection of Personal Information Act (POPIA) Act 4 of 2013. We implement appropriate technical and organizational measures to ensure the security, confidentiality, and integrity of all personal data we process.</span>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="shield" style="width:20px;height:20px"></i></div><span class="comp-ttl">Purpose Limitation</span></div><div class="comp-bod">We collect only the personal information necessary for our services and business operations</div></div>
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="lock" style="width:20px;height:20px"></i></div><span class="comp-ttl">Secure Storage</span></div><div class="comp-bod">All data is encrypted and stored on secure servers with multi-layer access controls</div></div>
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="eye" style="width:20px;height:20px"></i></div><span class="comp-ttl">Transparency</span></div><div class="comp-bod">Clear communication about what data we collect, why, and how it is used</div></div>
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="database" style="width:20px;height:20px"></i></div><span class="comp-ttl">Data Minimization</span></div><div class="comp-bod">We process the minimum amount of data required and retain it only as long as necessary</div></div>
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="check-circle" style="width:20px;height:20px"></i></div><span class="comp-ttl">Your Rights</span></div><div class="comp-bod">Right to access, correct, delete your information, and withdraw consent at any time</div></div>
+      <div class="comp-card"><div class="comp-hdr"><div class="comp-ico"><i data-lucide="file-text" style="width:20px;height:20px"></i></div><span class="comp-ttl">Accountability</span></div><div class="comp-bod">Regular audits and compliance reviews to ensure ongoing POPIA adherence</div></div>
+    </div>
+    <div class="data-card">
+      <div class="data-body">
+        <h3>Our Data Protection Practices</h3>
+        <p class="data-p"><strong>Lawful Processing:</strong> We only process personal information when we have a lawful basis to do so, including consent, contractual necessity, or legitimate business interests.</p>
+        <p class="data-p"><strong>Data Security:</strong> We implement industry-standard security measures including encryption, secure access controls, regular security audits, and employee training programs.</p>
+        <p class="data-p"><strong>Third-Party Processors:</strong> Any third-party service providers we work with are carefully vetted and must meet our strict data protection standards.</p>
+        <p class="data-p"><strong>Data Breach Response:</strong> We have comprehensive incident response procedures in place and will notify you promptly in the unlikely event of a data breach affecting your information.</p>
+        <div class="data-foot">For more information about how we handle your personal data, please review our <button class="em-lnk">Privacy Policy</button> or contact our Data Protection Officer at <a href="mailto:privacy@clevertel.co.za" class="em-lnk">privacy@clevertel.co.za</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-hdr">
+      <h2 class="sec-h2">Get In Touch</h2>
+      <p class="sec-sub">Ready to transform your business with our IT and messaging solutions? Contact us today</p>
+    </div>
+    <div class="cont-grid">
+      <!-- Left -->
+      <div>
+        <h3 class="ci-h3">Contact Information</h3>
+        <div class="ci-item"><div class="ci-icon"><i data-lucide="phone" style="width:24px;height:24px"></i></div><div><p class="ci-label">Phone</p><a href="tel:+27120232599" class="ci-val">012 023 2599</a></div></div>
+        <div class="ci-item"><div class="ci-icon"><i data-lucide="mail" style="width:24px;height:24px"></i></div><div><p class="ci-label">Email</p><a href="mailto:info@clevertel.co.za" class="ci-val">info@clevertel.co.za</a></div></div>
+        <div class="ci-item"><div class="ci-icon"><i data-lucide="map-pin" style="width:24px;height:24px"></i></div><div><p class="ci-label">Location</p><p class="ci-val">Pretoria East, South Africa</p></div></div>
+        <div class="info-box">
+          <h4 class="ib-title">Business Hours</h4>
+          <div class="hrs-row"><span>Monday - Friday:</span><span class="bld">8:00 AM - 5:00 PM</span></div>
+          <div class="hrs-row"><span>Saturday:</span><span class="bld">9:00 AM - 1:00 PM</span></div>
+          <div class="hrs-row"><span>Sunday:</span><span class="bld">Closed</span></div>
+          <div class="emergency">24/7 Emergency Support Available</div>
+        </div>
+        <div class="info-box">
+          <h4 class="ib-title">Interested in Our Services?</h4>
+          <p class="info-txt">Contact us via email:</p>
+          <a href="mailto:sales@clevertel.co.za" class="em-email"><i data-lucide="mail" style="width:16px;height:16px"></i> sales@clevertel.co.za</a>
+          <div class="em-divider">
+            <p class="info-txt">For support (fast response time):</p>
+            <a href="mailto:support@clevertel.co.za" class="em-email"><i data-lucide="mail" style="width:16px;height:16px"></i> support@clevertel.co.za</a>
+          </div>
+        </div>
+      </div>
+      <!-- Right: form -->
+      <div class="cf-box">
+        <h3 class="cf-title">Send Us a Message</h3>
+        <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+          <div class="fg"><label class="fl" for="fn">Your Name *</label><input type="text" id="fn" name="name" required placeholder="John Doe" /></div>
+          <div class="fg"><label class="fl" for="fe">Email Address *</label><input type="email" id="fe" name="email" required placeholder="john@example.com" /></div>
+          <div class="fg"><label class="fl" for="fm">Message *</label><textarea id="fm" name="message" required rows="5" placeholder="Tell us about your IT and messaging needs..."></textarea></div>
+          <div class="fg cbx-row">
+            <input type="checkbox" id="popia" name="popia" />
+            <label class="cbx-lbl" for="popia">I consent to Clevertel SA Group processing my personal information in accordance with POPIA for the purpose of responding to my inquiry. I understand my rights regarding my personal data. *</label>
+          </div>
+          <button type="submit" class="btn-sub"><i data-lucide="send" style="width:20px;height:20px"></i> Send Message</button>
+          <p class="fn">This will open your default email application with your message</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-main">
+    <div class="container">
+      <div class="ft-grid">
+        <div>
+          <img src="https://customer-assets.emergentagent.com/job_2ed4bce7-c51f-463a-afe4-6627afad08d6/artifacts/ar6bsgvr_logo%20width_250.webp" alt="Clevertel SA Group" class="ft-logo" />
+          <p class="ft-desc">Your trusted IT MSP and digital communications partner delivering secure, scalable solutions for businesses across South Africa.</p>
+          <div class="ft-social">
+            <a href="#" class="ft-soc-a" aria-label="Facebook"><i data-lucide="facebook" style="width:20px;height:20px"></i></a>
+            <a href="#" class="ft-soc-a" aria-label="Twitter"><i data-lucide="twitter" style="width:20px;height:20px"></i></a>
+            <a href="#" class="ft-soc-a" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px"></i></a>
+            <a href="#" class="ft-soc-a" aria-label="Instagram"><i data-lucide="instagram" style="width:20px;height:20px"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="ft-col-h">Quick Links</h3>
+          <ul class="ft-ul">
+            <li><button class="ft-nb" onclick="goTo('home')">Home</button></li>
+            <li><button class="ft-nb" onclick="goTo('services')">Services</button></li>
+            <li><button class="ft-nb" onclick="goTo('about')">About Us</button></li>
+            <li><button class="ft-nb" onclick="goTo('compliance')">POPIA Compliance</button></li>
+            <li><button class="ft-nb" onclick="goTo('contact')">Contact</button></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="ft-col-h">Services</h3>
+          <ul class="ft-ul">
+            <li class="ft-svc">Managed IT Services</li>
+            <li class="ft-svc">Business Automation</li>
+            <li class="ft-svc">Messaging Solutions</li>
+            <li class="ft-svc">Cloud &amp; VPS Hosting</li>
+            <li class="ft-svc">Email Hosting</li>
+            <li class="ft-svc">24/7 IT Support</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="ft-col-h">Contact Us</h3>
+          <div class="ft-ci"><span class="ft-ci-ico"><i data-lucide="phone" style="width:20px;height:20px"></i></span><div><p class="ft-ci-lbl">Phone</p><a href="tel:+27120232599" class="ft-ci-val">012 023 2599</a></div></div>
+          <div class="ft-ci"><span class="ft-ci-ico"><i data-lucide="mail" style="width:20px;height:20px"></i></span><div><p class="ft-ci-lbl">Email</p><a href="mailto:info@clevertel.co.za" class="ft-ci-val">info@clevertel.co.za</a></div></div>
+          <div class="ft-ci"><span class="ft-ci-ico"><i data-lucide="map-pin" style="width:20px;height:20px"></i></span><div><p class="ft-ci-lbl">Location</p><p class="ft-ci-val">Pretoria East, South Africa</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <div class="container">
+      <div class="ft-bot-inner">
+        <p class="ft-copy" id="ft-copy">© 2025 Clevertel SA Group. All rights reserved.</p>
+        <div class="ft-legal">
+          <button class="ft-leg-btn">Privacy Policy</button>
+          <button class="ft-leg-btn">Terms of Service</button>
+          <button class="ft-leg-btn" onclick="goTo('compliance')">POPIA Compliance</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<button id="wa-fab" class="animate-bounce-slow" onclick="window.open('https://wa.me/27750467727','_blank')" aria-label="Chat on WhatsApp">
+  <i data-lucide="message-circle" style="width:28px;height:28px"></i>
+  <span class="wa-tip">Chat with Clevertel</span>
+</button>
+
+<script>
+  lucide.createIcons();
+  document.getElementById('ft-copy').textContent = `© ${new Date().getFullYear()} Clevertel SA Group. All rights reserved.`;
+
+  function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})}
+
+  /* Sticky header */
+  const hdr=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>50),{passive:true});
+
+  /* Dark mode */
+  const html=document.documentElement;
+  function applyTheme(t){
+    if(t==='dark'){html.classList.add('dark');document.getElementById('ico-moon').classList.add('hidden');document.getElementById('ico-sun').classList.remove('hidden')}
+    else{html.classList.remove('dark');document.getElementById('ico-sun').classList.add('hidden');document.getElementById('ico-moon').classList.remove('hidden')}
+    lucide.createIcons();
+  }
+  applyTheme(localStorage.getItem('theme')||'light');
+  document.getElementById('theme-btn').addEventListener('click',()=>{
+    const n=html.classList.contains('dark')?'light':'dark';
+    localStorage.setItem('theme',n);applyTheme(n);
+  });
+
+  /* Mobile menu */
+  const mob=document.getElementById('mobile-menu');
+  document.getElementById('menu-btn').addEventListener('click',()=>{
+    const o=mob.classList.toggle('open');
+    document.getElementById('ico-menu').classList.toggle('hidden',o);
+    document.getElementById('ico-x').classList.toggle('hidden',!o);
+  });
+  function closeMob(){mob.classList.remove('open');document.getElementById('ico-menu').classList.remove('hidden');document.getElementById('ico-x').classList.add('hidden')}
+
+  /* Tabs */
+  const TABS=['managed-it','automation','messaging','email-security'];
+  function switchTab(t){
+    TABS.forEach(id=>{
+      document.getElementById('tab-'+id).classList.toggle('active',id===t);
+      document.getElementById('tab-'+id).setAttribute('aria-selected',id===t);
+      document.getElementById('panel-'+id).classList.toggle('active',id===t);
+    });
+  }
+
+  /* Contact form → mailto (mirrors ContactSection.jsx exactly) */
+  function handleSubmit(e){
+    e.preventDefault();
+    const name=document.getElementById('fn').value.trim();
+    const email=document.getElementById('fe').value.trim();
+    const msg=document.getElementById('fm').value.trim();
+    const consent=document.getElementById('popia').checked;
+    if(!consent){alert('Please accept the POPIA consent to continue.');return;}
+    const sub=encodeURIComponent('Contact Form Submission from '+name);
+    const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+msg+'\n\n---\nPOPIA Consent: Granted');
+    window.location.href='mailto:info@clevertel.co.za?subject='+sub+'&body='+body;
+  }
+</script>
+</body>
+</html>
